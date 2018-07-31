@@ -1,0 +1,72 @@
+<ion-view>
+  <ion-header-bar class="bar bar-positive" title="align-center">
+    <h1 class="title">{{vm.texts.RESULTS_TITLE}}</h1>
+  </ion-header-bar>
+  <ion-content id="results-view" scroll="true">
+    <div id="text" class="results-view">
+      {{vm.texts.GOOD_JOB_TEXT}}, {{vm.user.name}}
+    </div>
+    <div ng-show="vm.newLevelMessage">
+      <img class="new-level" src="img/new-level.gif">
+      <button class="button button-positive button-full"
+        ng-click="vm.hideNewLevelNotification()">{{vm.texts.NEXT_BUTTON}}</button>
+    </div>
+    <div ng-show="!vm.explanationsSlide && !vm.newLevelMessage">
+      <div class="card">
+        <div class="item item-divider">
+          {{vm.texts.RESULTS_TITLE}}
+        </div>
+        <div class="item item-text-wrap">
+          <div class="item">
+            <canvas id="results">
+            </canvas>
+          </div>
+            {{vm.texts.GAME_TIME_TEXT}}: {{vm.sessionTime}}
+        </div>
+      </div>
+    </div>
+    <div ng-show="vm.explanationsSlide">
+      <div class="card">
+        <div class="item item-divider">
+          {{vm.texts.EXPLANATIONS_BUTTON}}
+        </div>
+        <div class="item item-text-wrap" scroll="true">
+          {{vm.wrongSentences[vm.explanationNumber]}}
+          <div class="row">
+            <div class="col incorrect-word">
+              <p>{{vm.errors[vm.explanationNumber].incorrectWord}}</p>
+              <p>{{vm.errors[vm.explanationNumber].incorrectCode[vm.language]}}</p>
+            </div>
+            <i class="icon ion-arrow-right-c"></i>
+            <div class="col">
+              <p class="positive">{{vm.errors[vm.explanationNumber].correctWord}}</p>
+              <p class="positive">{{vm.errors[vm.explanationNumber].correctCode[vm.language]}}</p>
+            </div>
+          </div>
+          <img class="spain-flag" ng-src="{{vm.imageUrl}}" ng-click="vm.changeLanguage()"><br>
+          <ion-scroll direction="y" class="explanation-box">
+            {{vm.errors[vm.explanationNumber].correctExplanation[vm.language]}}. {{vm.explanationJoiner[vm.language]}},
+            {{vm.errors[vm.explanationNumber].incorrectExplanation[vm.language]}}.
+          </ion-scroll>
+        </div>
+      </div>
+    </div>
+    <div ng-show="!vm.newLevelMessage">
+      <div ng-show="vm.resultType != 'pronunciation'">
+        <button class="button button-full button-assertive explanations-button icon ion-ios-arrow-thin-right"
+          ng-click="vm.changeSlide(false)" ng-show="vm.explanationNumber >= 0">
+          {{vm.texts.NEXT_BUTTON}}
+        </button>
+        <button class="button button-full button-assertive explanations-button"
+          ng-click="vm.changeSlide(false)" ng-show="vm.explanationNumber <= -1 && vm.errors.length > 0">{{vm.texts.EXPLANATIONS_BUTTON}}</button>
+        <button class="button button-full button-positive return-button"
+          ng-click="vm.changeSlide(true)">{{vm.texts.MENU_BUTTON}}</button>
+      </div>
+      <div ng-show="vm.resultType == 'pronunciation'" id="text">
+        <button class="button button-outline button-positive button-small" ng-click="vm.replayPronunciation()">{{vm.texts.REPEAT_WORDS_BUTTON}}</button>
+        <button class="button button-outline button-positive button-small" ng-click="vm.newPronunciationWords()">{{vm.texts.NEW_WORDS_BUTTON}}</button>
+        <button class="button button-outline button-positive button-small" ng-click="vm.goToMain()">{{vm.texts.MENU_BUTTON}}</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

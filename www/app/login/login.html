@@ -1,0 +1,18 @@
+<ion-view id="login-view">
+  <ion-header-bar>
+    <button ng-click="vm.goToHome()" class="button icon ion-chevron-left"></button>
+  </ion-header-bar>
+  <ion-content padding="true" scroll="false">
+    <div class="spacer-5"></div>
+    <form name="loginForm">
+      <input type="email" class="form-control input-underline" placeholder="Email" ng-model="vm.user.user" required>
+      <input type="password" class="form-control input-underline" placeholder="Contraseña" ng-model="vm.user.password" required>
+      <button type="submit" class="button button-full button-outline button-positive login-button" ng-click="vm.logIn()" ng-disabled="loginForm.$invalid">
+        {{vm.texts.LOGIN_BUTTON}}
+      </button>
+      <button type="submit" class="button button-full button-outline button-positive login-button" ng-click="vm.loginWithFacebook()">
+        <i class="icon ion-social-facebook"></i>
+      </button>
+    </form>
+  </ion-content>
+</ion-view>

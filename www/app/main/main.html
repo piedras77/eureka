@@ -1,0 +1,36 @@
+<ion-side-menus enable-menu-with-back-views="false" title="center">
+  <ion-side-menu-content>
+    <ion-header-bar class="bar bar-positive" align-title="center">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        <h3 class="title">Eureka</h3>
+    </ion-header-bar>
+    <ion-nav-view id="main-view">
+      <div class="row">
+        <div>
+          <img ng-click="vm.changeView('pronunciation')" class="option-image" src="img/pronunciation-logo.png" id="logo" />
+          {{vm.categories.CATEGORY_PRONUNCIATION}}
+          <img ng-click="vm.changeView('fill-text')" class="option-image" ng-class="{'disabled-image' : !vm.pronunciationReady}" src="img/fill-text-logo.png" id="logo"/>
+          {{vm.categories.CATEGORY_FILL}}
+        </div>
+        <div>
+          <img ng-click="vm.changeView('classify')" class="option-image" ng-class="{'disabled-image' : !vm.pronunciationReady}" src="img/classify-logo.png" id="logo" />
+          {{vm.categories.CATEGORY_CLASSIFY}}
+          <img ng-click="vm.changeView('reading')" class="option-image" ng-class="{'disabled-image' : !vm.pronunciationReady}" src="img/reading-logo.png" id="logo" />
+          {{vm.categories.CATEGORY_READING}}
+        </div>
+      </div>
+      <img src="img/signal-gesture.png" class="signal-gesture" ng-show="!vm.knowsTextOptions"><br>
+      <label class="item item-select" ng-click="vm.showAvailableTexts()">
+        {{vm.categories.NEW_TEXTS_BUTTONS}}: {{vm.selectedText.text}}
+      </label>
+    </ion-nav-view>
+  </ion-side-menu-content>
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-positive">
+      <h1 class="title"></h1>
+    </ion-header-bar>
+    <ion-content>
+      <div ng-include src="'app/sideview/sideview.html'"></div>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

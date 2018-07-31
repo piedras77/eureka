@@ -1,0 +1,29 @@
+<ion-view>
+  <ion-header-bar class="bar bar-positive">
+    <button class="button icon ion-ios-arrow-thin-left" ng-click="vm.goToMain()"></button>
+    <h1 class="title">{{vm.texts.CATEGORY_PRONUNCIATION}}</h1>
+  </ion-header-bar>
+  <ion-content id="pronunciation-view" scroll="false">
+    <div id="text"  ng-click="vm.listenAudio()">
+      <div class="{{vocabularyState}}">
+        {{vm.vocabulary[vm.wordNumber]}}  <i class="icon ion-android-volume-up"></i>
+      </div>
+      <div class="translation">
+        '{{vm.translation[vm.wordNumber]}}'
+      </div>
+      <div class="{{vm.answerType}}">
+        {{speechResult}}
+      </div>
+    </div>
+    <img ng-src="img/{{vm.micType}}" ng-click="vm.speak()" ng-class="{'microphone' : !speaking, 'microphone-recording' : speaking}">
+    <button class="button button-positive button-outline button-left"
+            ng-show="vm.wordNumber"
+            ng-click="vm.previousSlide()">
+      {{vm.texts.PREVIOUS_BUTTON}}
+    </button>
+    <button class="button button-positive button-outline button-right"
+            ng-click="vm.nextSlide()"
+            ng-disabled="vm.answerType != 'answer-correct'">{{vm.texts.NEXT_BUTTON}}
+    </button>
+  </ion-content>
+</ion-view>

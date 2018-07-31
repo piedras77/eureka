@@ -1,0 +1,77 @@
+<ion-view>
+  <ion-header-bar class="bar bar-positive">
+    <button class="button icon ion-ios-arrow-thin-left" ng-click="vm.goToMain()"></button>
+    <h1 class="title">{{vm.texts.CATEGORY_FILL}}</h1>
+  </ion-header-bar>
+  <ion-content id="fill-view" scroll="false">
+    <ion-slides  options="options" slider="data.slider">
+      <ion-slide-page ng-repeat="sentence in vm.sentences">
+        <div class="sentence">
+          {{sentence.part1}} <span class="selected-word">
+          {{selectedOption[$index].word}}
+          </span> {{sentence.part2}}
+        </div>
+        <div ng-show="vm.inputType">
+          <ion-item class="positive">
+            <div class="row">
+              <div class="col" ng-repeat="word in vm.wordOptions[$index] track by $index" ng-click="vm.listenAudio(word.word)">
+                {{word.word}}
+              </div>
+            </div>
+          </ion-item>
+          <div class="assertive option-view">
+            {{unknownAnswer}}
+          </div>
+          <img ng-src="img/{{vm.micType}}" ng-click="vm.speak($index)" ng-class="{'microphone' : !speaking, 'microphone-recording' : speaking}">
+        </div>
+        <div class="options" ng-show="!vm.inputType">
+          <center>
+            <div class="row">
+              <div class="col">
+                <button class="button  {{vm.buttonType($index, 0)}} button-positive"
+                        ng-click="vm.optionClick($index, 0)">
+                  {{vm.wordOptions[$index][0].word}}
+                </button>
+              </div>
+              <div class="col">
+                <button class="button {{vm.buttonType($index, 1)}} button-positive"
+                        ng-click="vm.optionClick($index, 1)">
+                  {{vm.wordOptions[$index][1].word}}
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="button {{vm.buttonType($index, 2)}} button-positive"
+                        ng-click="vm.optionClick($index, 2)"
+                        ng-show="vm.wordOptions[$index][2]">
+                  {{vm.wordOptions[$index][2].word}}
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="button {{vm.buttonType($index, 4)}} button-positive"
+                        ng-click="vm.optionClick($index, 4)"
+                        ng-show="vm.wordOptions[$index][4]">
+                  {{vm.wordOptions[$index][4].word}}
+                </button>
+              </div>
+              <div class="col">
+                <button class="button {{vm.buttonType($index, 3)}} button-positive"
+                        ng-click="vm.optionClick($index, 3)"
+                        ng-show="vm.wordOptions[$index][3]">{{vm.wordOptions[$index][3].word}}</button>
+              </div>
+            </div>
+          </center>
+        </div>
+        <button class="button button-positive button-full" ng-show="$last" ng-click="vm.verifyCompleteAnswers()">
+          {{vm.texts.GRADE_BUTTON}}
+        </button>
+        <div class="question-number">
+          {{$index + 1}}
+        </div>
+      </ion-slide-page>
+    </ion-slides>
+  </ion-content>
+</ion-view>

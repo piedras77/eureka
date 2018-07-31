@@ -1,0 +1,12 @@
+<ion-view id="profile-picture-view">
+  <ion-header-bar class="bar bar-positive" align-title="center">
+    <button class="button button-icon ion-close-round" ng-click="vm.goToProgress()"></button>
+    <h3 class="title">{{vm.texts.PROFILE_PICTURE}}</h3>
+  </ion-header-bar>
+  <ion-content padding="true">
+    <div class="row" ng-repeat="imageRow in vm.imageNames">
+      <div class="col"><img src="img/profile/{{imageRow[0]}}.png" class="picture" ng-click="vm.changeProfileConfirmation($index, 0)"></div>
+      <div class="col"><img src="img/profile/{{imageRow[1]}}.png" class="picture" ng-click="vm.changeProfileConfirmation($index, 1)"></div>
+      <div class="col"><img src="img/profile/{{imageRow[2]}}.png" class="picture" ng-click="vm.changeProfileConfirmation($index, 2)"></div>
+    </div>
+</ion-view>

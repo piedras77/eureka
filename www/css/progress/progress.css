@@ -1,0 +1,106 @@
+#progress-view {
+  margin-bottom: 10px !important;
+  text-align: center; }
+  #progress-view ion-content {
+    background-image: url("background.png"); }
+  #progress-view .popup {
+    text-align: center; }
+  #progress-view .connect-facebook {
+    font-size: 42px; }
+  #progress-view .profile-area {
+    margin-top: 77px;
+    margin-right: auto;
+    margin-left: auto; }
+  #progress-view .picture {
+    width: 100px;
+    height: 100px;
+    border: 1px solid orange; }
+  #progress-view .signal-gesture {
+    transform: rotate(135deg);
+    width: 15%;
+    height: 15%;
+    margin-left: -80px !important;
+    margin-bottom: -30px !important; }
+  #progress-view .col-info {
+    margin-top: 18%;
+    font-size: 12px; }
+  #progress-view .numbers-info {
+    font-size: 28px;
+    font-weight: bold;
+    color: #387ef5; }
+  #progress-view .first-info {
+    background-color: white;
+    height: 117px;
+    margin-top: -60px;
+    color: orange;
+    text-align: bottom; }
+  #progress-view #level-info {
+    font-size: 20px;
+    color: white;
+    background-color: orange;
+    height: 40%; }
+    #progress-view #level-info .level-title {
+      margin-bottom: 15px; }
+  #progress-view #friends-info {
+    background-color: #387ef5;
+    color: white;
+    height: 77px;
+    font-size: 20px; }
+  #progress-view #vocab-info {
+    color: white;
+    height: 77px;
+    font-size: 20px; }
+  #progress-view #ranks-info {
+    background-color: white;
+    color: #387ef5;
+    display: flex;
+    flex-direction: column; }
+    #progress-view #ranks-info .leaders-first {
+      display: block;
+      border-radius: 50%;
+      width: 23%;
+      margin-left: auto;
+      margin-right: auto; }
+    #progress-view #ranks-info .leaders-second {
+      display: block;
+      border-radius: 50%;
+      width: 23%;
+      margin-left: auto;
+      margin-right: 10%; }
+    #progress-view #ranks-info .leaders-third {
+      border-radius: 50%;
+      display: block;
+      width: 23%;
+      margin-left: 10%; }
+    #progress-view #ranks-info .price-first {
+      display: block;
+      width: 45px;
+      height: 45px;
+      margin-bottom: 0;
+      margin-left: auto;
+      margin-right: auto; }
+    #progress-view #ranks-info .price-second {
+      display: block;
+      width: 45px;
+      height: 45px;
+      margin-top: -17px;
+      margin-left: auto;
+      margin-right: 10%; }
+    #progress-view #ranks-info .price-third {
+      display: block;
+      width: 45px;
+      height: 45px;
+      margin-top: -17px;
+      margin-left: 10%;
+      margin-right: auto; }
+    #progress-view #ranks-info .more-button {
+      width: 5% !important; }
+  #progress-view #time-info {
+    background-color: tomato;
+    color: white;
+    height: 77px;
+    font-size: 20px; }
+  #progress-view div {
+    margin: 0;
+    padding: 0;
+    widht: 100%; }

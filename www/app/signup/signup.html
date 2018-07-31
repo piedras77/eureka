@@ -1,0 +1,49 @@
+<ion-view>
+  <ion-header-bar>
+    <button class="button icon ion-chevron-left" ng-click="vm.goToHome()"></button>
+  </ion-header-bar>
+  <ion-content id="signup-view">
+    <form class ="signup-fields" name="singupForm">
+      <label class="item item-input">
+        <i class="icon ion-person-add placeholder-icon"></i>
+        <input type="text" placeholder="Nombre Completo" ng-trim="true" ng-model="vm.user.name" required></input>
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-email placeholder-icon"></i>
+        <input type="email" placeholder="Correo" ng-trim="true" ng-model="vm.user.email" required></input>
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-calculator placeholder-icon"></i>
+        <input type="number" ng-min="0" ng-max="125" placeholder="Edad" ng-model="vm.user.age" required></input>
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-ios-body placeholder-icon"></i>
+        <div class="row">
+          <div class="col-50">
+          <button  ng-click="vm.setGender()" ng-class="{'button button-full button-positive button-small' : vm.user.gender == 0,'button button-full button-outline button-positive button-small' : vm.user.gender == 1}">
+          Femenino
+          </button>
+        </div>
+        <div class="col-50">
+          <button  ng-click="vm.setGender()" ng-class="{'button button-full button-positive button-small' : vm.user.gender == 1,'button button-full button-outline button-positive button-small' : vm.user.gender == 0}">
+            Masculino
+          </button>
+        </div>
+      </div>
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-key placeholder-icon"></i>
+        <input type="password" placeholder="Contraseña" ng-change="vm.passwordsMatch()" ng-trim="true" ng-model="vm.user.password1" required></input>
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-key placeholder-icon"></i>
+        <input type="password" placeholder="Confirmar Contraseña" ng-change="vm.passwordsMatch()" ng-trim="true" ng-model="vm.user.password2" required></input>
+        <i class="icon ion-ios-close-outline placeholder-icon" ng-show="vm.user.password2 != vm.user.password1"></i>
+        <i class="icon ion-checkmark placeholder-icon" ng-show="vm.user.password2 == vm.user.password1"></i>
+      </label>
+      <button class="button button-full button-positive" ng-click="vm.signUp()" ng-disabled="vm.user.password1 != vm.user.password2 || singupForm.$invalid">
+        Registrarse
+      </button>
+    </form>
+  </ion-content>
+</ion-view>

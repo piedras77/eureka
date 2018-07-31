@@ -1,0 +1,32 @@
+#results-view {
+  text-align: center; }
+  #results-view .explanations-button {
+    margin-top: 10%;
+    width: 90%;
+    margin-left: 5%; }
+  #results-view .return-button {
+    margin-top: 5%;
+    width: 90%;
+    margin-left: 5%; }
+  #results-view .incorrect-word {
+    color: red;
+    text-decoration: line-through; }
+  #results-view #text {
+    text-align: center;
+    color: gray;
+    /*margin-top: 20px;*/
+    margin-bottom: 10px; }
+    #results-view #text .results-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14pt;
+      padding-bottom: 10px; }
+  #results-view .spain-flag {
+    width: 9%;
+    text-align: left !important; }
+  #results-view .explanation-box {
+    height: 100px; }
+  #results-view .new-level {
+    margin-top: 10%;
+    margin-bottom: 7%;
+    width: 90%; }

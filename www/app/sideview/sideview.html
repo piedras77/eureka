@@ -1,0 +1,22 @@
+<ion-list id="side-view">
+  <label menu-close class="item item-text-wrap item-text-center profile">
+    {{vm.user.name}}, nivel {{vm.user.level}}
+  </label>
+  <label menu-close class="item item-input options" ng-click="vm.mainMenu()">
+    Main menu
+  </label>
+  <label menu-close class="item item-input options" ng-click="vm.myProgress()">
+    My progress
+  </label>
+  <label menu-close class="item item-input options" ng-click="vm.myTexts()">
+    My texts
+  </label>
+  <div class="settings">
+    <!-- <label menu-close class="item item-input options" ng-click="vm.aboutTheApp()">
+      About the App
+    </label> -->
+    <label class="item item-input options" ng-click="vm.logOut()">
+      Sign out
+    </label>
+  </div>
+</ion-list>

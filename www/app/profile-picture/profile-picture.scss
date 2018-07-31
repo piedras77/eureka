@@ -1,0 +1,18 @@
+@import "www/css/variables";
+
+#profile-picture-view{
+  text-align: center;
+
+  .picture {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin-top: 7px;
+    border: 1px solid $secondary-eureka;
+  }
+
+  .div {
+    margin-left: 99px;
+    margin-left: 1px;
+  }
+}

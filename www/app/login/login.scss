@@ -1,0 +1,52 @@
+#login-view{
+  margin-bottom: 10px !important;
+  
+  .spacer-5 {
+    height: 5em;
+  }
+
+  .logo {
+    display: block;
+    width: 80%;
+    height: 36%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .input-underline {
+    margin-bottom: 2em !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-bottom: 2px solid lightgray !important;
+    color: black !important;
+    border-radius: 0 !important;
+    width: 80% !important;
+    margin-left: 10% !important;
+    &::-moz-placeholder {
+      color: lightgray !important;
+    }
+    &::-ms-input-placeholder {
+      color: lightgray !important;
+    }
+    &::-webkit-input-placeholder {
+      color: lightgray !important;
+    }
+
+    &:focus {
+      border-bottom: 2px solid #387ef5 !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .login-button {
+    margin-top: 3em;
+    width: 80% !important;
+    margin-left: 10% !important;
+  }
+
+  .facebook-login {
+    width: 80% !important;
+    margin-left: 10% !important;
+  }
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+      <!-- inject:css -->
+    <!-- <link rel="stylesheet" href="css/ionic.app.css">
+    <link rel="stylesheet" href="css/ionic.app.min.css"> -->
+    <link rel="stylesheet" href="css/home/home.css">
+    <link rel="stylesheet" href="css/home/home.min.css">
+    <link rel="stylesheet" href="css/signup/signup.css">
+    <link rel="stylesheet" href="css/signup/signup.min.css">
+    <link rel="stylesheet" href="css/main/main.css">
+    <link rel="stylesheet" href="css/main/main.min.css">
+    <link rel="stylesheet" href="css/login/login.css">
+    <link rel="stylesheet" href="css/login/login.min.css">
+    <link rel="stylesheet" href="css/fill-text/fill-text.css">
+    <link rel="stylesheet" href="css/fill-text/fill-text.min.css">
+    <link rel="stylesheet" href="css/pronunciation/pronunciation.css">
+    <link rel="stylesheet" href="css/pronunciation/pronunciation.min.css">
+    <link rel="stylesheet" href="css/reading/reading.css">
+    <link rel="stylesheet" href="css/reading/reading.min.css">
+    <link rel="stylesheet" href="css/results/results.css">
+    <link rel="stylesheet" href="css/results/results.min.css">
+    <link rel="stylesheet" href="css/texts/texts.css">
+    <link rel="stylesheet" href="css/texts/texts.min.css">
+    <link rel="stylesheet" href="css/sideview/sideview.css">
+    <link rel="stylesheet" href="css/sideview/sideview.min.css">
+    <link rel="stylesheet" href="css/classify/classify.css">
+    <link rel="stylesheet" href="css/classify/classify.min.css">
+    <link rel="stylesheet" href="css/progress/progress.css">
+    <link rel="stylesheet" href="css/progress/progress.min.css">
+    <link rel="stylesheet" href="css/profile-picture/profile-picture.css">
+    <link rel="stylesheet" href="css/profile-picture/profile-picture.min.css">
+    <link rel="stylesheet" href="css/about-app/about-app.css">
+    <link rel="stylesheet" href="css/about-app/about-app.min.css">
+    <!-- endinject -->
+
+
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- DO we need this? -->
+    <!-- <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script> -->
+    <script src="lib/chart.js/dist/Chart.min.js"></script>
+    <!-- <script src="lib/angular-chart.js/dist/angular-chart.min.js"></script> -->
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <!-- <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script> -->
+    <!--  -->
+
+
+    <script src="app/app.module.js"></script>
+    <script src="app/app.config.js"></script>
+    <script src="app/app.routes.js"></script>
+    <script src="app/app.run.js"></script>
+
+    <script src="app/service/pronunciation.service.js"></script>
+    <script src="app/service/session.service.js"></script>
+    <script src="app/service/text.service.js"></script>
+    <script src="app/service/options.service.js"></script>
+    <script src="app/service/facebook.service.js"></script>
+    <script src="app/service/classify.service.js"></script>
+
+    <script src="app/core/core.module.js"></script>
+    <script src="app/core/core.constants.js"></script>
+    <script src="app/core/core.text.js"></script>
+
+    <script src="app/home/home.module.js"></script>
+    <script src="app/home/home.controller.js"></script>
+    <script src="app/home/home.routes.js"></script>
+
+    <script src="app/login/login.module.js"></script>
+    <script src="app/login/login.controller.js"></script>
+    <script src="app/login/login.routes.js"></script>
+
+    <script src="app/signup/signup.module.js"></script>
+    <script src="app/signup/signup.controller.js"></script>
+    <script src="app/signup/signup.routes.js"></script> 
+
+    <script src="app/main/main.module.js"></script>
+    <script src="app/main/main.controller.js"></script>
+    <script src="app/main/main.routes.js"></script>
+
+    <script src="app/fill-text/fill-text.module.js"></script>
+    <script src="app/fill-text/fill-text.controller.js"></script>
+    <script src="app/fill-text/fill-text.routes.js"></script>   
+
+    <script src="app/pronunciation/pronunciation.module.js"></script>
+    <script src="app/pronunciation/pronunciation.controller.js"></script>
+    <script src="app/pronunciation/pronunciation.routes.js"></script>
+
+    <script src="app/classify/classify.module.js"></script>
+    <script src="app/classify/classify.controller.js"></script>
+    <script src="app/classify/classify.routes.js"></script>
+
+    <scritp src="app/reading/reading.module.js"></script>
+    <!-- <script src="app/reading/reading.controller.js"></script> --><!--  -->
+    <!-- <script src="app/reading/reading.routes.js"></script> -->
+
+    <script src="app/results/results.module.js"></script>
+    <script src="app/results/results.controller.js"></script>
+    <script src="app/results/results.routes.js"></script>
+
+    <script src="app/progress/progress.module.js"></script>
+    <script src="app/progress/progress.controller.js"></script>
+    <script src="app/progress/progress.routes.js"></script>
+
+    <script src="app/texts/texts.module.js"></script>
+    <script src="app/texts/texts.controller.js"></script>
+    <script src="app/texts/texts.routes.js"></script>
+
+    <script src="app/profile-picture/profile-picture.module.js"></script>
+    <script src="app/profile-picture/profile-picture.controller.js"></script>
+    <script src="app/profile-picture/profile-picture.routes.js"></script> 
+
+    <script src="app/about-app/about-app.module.js"></script>
+    <script src="app/about-app/about-app.controller.js"></script>
+    <script src="app/about-app/about-app.routes.js"></script>  
+  </head>
+  <body ng-app="app">
+    <ion-nav-view>
+    </ion-nav-view>
+  </body>
+</html>
