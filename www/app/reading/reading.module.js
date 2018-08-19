@@ -3,5 +3,4 @@
 
   angular
     .module('app.reading', []);
-
 })();

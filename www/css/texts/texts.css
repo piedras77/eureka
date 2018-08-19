@@ -3,5 +3,10 @@
   position: absolute;
   right: 10px; }
 
+ #texts-view .download {
+  color: #387ef5;
+  position: absolute;
+  right: 10px; }
+
 #texts-view .header {
   background-color: #FEA218; }

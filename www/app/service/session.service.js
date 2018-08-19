@@ -6,7 +6,7 @@
     .service('sessionService', sessionService);
 
   /* @ngInject */
-  function sessionService(pronunciationService) {
+  function sessionService(pronunciationService, CORE) {
     var service = {
       setCurrentUser: setCurrentUser,
       getCurrentUser: getCurrentUser,
@@ -18,7 +18,6 @@
       getStudyingTime: getStudyingTime,
       setPronunciationWeights: setPronunciationWeights,
       getPronunciationWeights: getPronunciationWeights,
-      updatePoints: updatePoints,
     };
 
     return service;
@@ -56,6 +55,10 @@
 
     function getMyTexts() {
       var localTexts = JSON.parse(localStorage.getItem('myTexts'));
+      if (localTexts == null) {
+        setMyTexts(CORE.DEFAULT_TEXTS);
+        localTexts = JSON.parse(localStorage.getItem('myTexts'));
+      }
       var validTexts = [];
       var XMLText = new DOMParser();
       for (var textLevel in Object.keys(localTexts)) {
@@ -68,15 +71,6 @@
       }
 
       return validTexts;
-    }
-
-    function updatePoints() {
-      var user = getCurrentUser();
-      var oldLevel = user.level;
-      user.level = pronunciationService.pronunciationReady() ? Math.ceil(3.24 * Math.sqrt(++user.points) / 10) : oldLevel;
-      user.points = user.points + 1;
-      setCurrentUser(user);
-      return oldLevel != user.level  ? true : false;
     }
 
     function setPronunciationWeights(newWeights) {

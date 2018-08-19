@@ -26,6 +26,9 @@
       getSentenceJSON: getSentenceJSON,
       capitalize: capitalize,
       mapValues: mapValues,
+      FROM_MAIN: 0, 
+      FROM_TEXTS: 1,
+      FROM_DATABASE: 2
     };
 
     return service;
@@ -84,22 +87,36 @@
       });
     }
 
-    function getIntroWords(introSize, allTexts) {
-      var savedTexts = allTexts ? JSON.parse(localStorage.getItem('myTexts')) : sessionService.getMyTexts();
-      if (allTexts) {
-        var textArray = [];
-        for (var key = 0; key < Object.keys(savedTexts).length; key++) {
-          for (var text = 0; text < savedTexts[Object.keys(savedTexts)[key]].length; text++) {
-            textArray.push(savedTexts[Object.keys(savedTexts)[key]][text]);
+    function getIntroWords(introSize, incomingView, texts) {
+      var savedTexts = texts;
+      switch (incomingView) {
+        case service.FROM_MAIN:
+          savedTexts = sessionService.getMyTexts()
+        break;
+        case service.FROM_TEXTS:
+          savedTexts = JSON.parse(localStorage.getItem('myTexts'));
+          var textArray = [];
+          for (var key = 0; key < Object.keys(savedTexts).length; key++) {
+            for (var text = 0; text < savedTexts[Object.keys(savedTexts)[key]].length; text++) {
+              textArray.push(savedTexts[Object.keys(savedTexts)[key]][text]);
+            }
           }
-        }
 
-        savedTexts = textArray;
+          savedTexts = textArray;
+        break;
+        case service.FROM_DATABASE:
+          var textArray = [];
+          for (var text in savedTexts) {
+            textArray.push( savedTexts[text].text );
+          }
+
+          savedTexts = textArray;
+          break;
       }
 
       var introStrings = [];
       for (var text in savedTexts) {
-        var XMLText = new DOMParser().parseFromString(savedTexts[text], "text/xml").childNodes[0];
+            var XMLText = new DOMParser().parseFromString(savedTexts[text], "text/xml").childNodes[0];
         var sentences = XMLText.childNodes;
         var textString = '';
         for (var sentence in sentences) {

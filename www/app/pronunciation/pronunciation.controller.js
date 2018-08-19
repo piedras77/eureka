@@ -13,6 +13,7 @@
                                    pronunciationService,
                                    textService,
                                    $state) {
+
     var _this = this;
     var level = sessionService.getCurrentUser().level;
     var sessionTime = 0;
@@ -25,8 +26,8 @@
     $scope.vocabularyState = 'not-reading';
     $scope.speaking = false;
     $scope.speechResult = TEXT.PRONUNCIATION_INSTRUCTIONS;
-    // var recognition = new SpeechRecognition();
-    var recognition = new webkitSpeechRecognition();
+    var recognition = new SpeechRecognition();
+    // var recognition = new webkitSpeechRecogniiton();
     recognition.onresult = speechResult;
     recognition.onerror = speakEnd;
     _this.speak = speak;
@@ -39,6 +40,9 @@
     activate();
 
     function activate() {
+      document.addEventListener('backbutton', () => {
+        goToMain();
+      });
       recognition.lang = 'en-US';
       _this.micType = "microphone-idle.png";
       if (pronunciationService.getReplayStatus()) {

@@ -14,16 +14,17 @@
                           TEXT,
                           textService,
                           pronunciationService,
-                          sessionService) {
+                          sessionService,
+                          apiService) {
     var _this = this;
     _this.categories = TEXT;
     _this.pronunciationReady = pronunciationService.pronunciationReady();
     _this.knowsTextOptions = localStorage.getItem('knowsTextOptions');
-    _this.textsIntro = textService.getIntroWords(25, false);
+    _this.textsIntro = textService.getIntroWords(25, textService.FROM_MAIN, null);
     _this.previousText = textService.getTextIntro() ? textService.getTextIntro() : _this.textsIntro[0];
     _this.selectedText = _this.previousText;
     _this.user = sessionService.getCurrentUser();
-    _this.logOut = logOut;
+    _this.logOut = apiService.logout;
     _this.myTexts = myTexts;
     _this.myProgress = myProgress;
     _this.socialShare = socialShare;
@@ -34,11 +35,11 @@
       _this.user.level = 6;
       sessionService.setCurrentUser(_this.user);
     }
+
     socialShare();
 
     function changeView(exerciseType) {
-      if (true) {
-      // if (_this.pronunciationReady || exerciseType == 'pronunciation') {
+      if (_this.user.admin || ( _this.pronunciationReady || exerciseType == 'pronunciation' ) ) {
         var allTexts = sessionService.getMyTexts();
         textService.setText(allTexts[_this.selectedText.id]);
         textService.setTextIntro({id: _this.selectedText.id, text: _this.selectedText.text});
@@ -60,13 +61,13 @@
         $ionicPopup.alert({
           title: TEXT.LOCKED_CATEGORY_TITLE,
           template: TEXT.LOCKED_CATEGORY_MESSAGE,
-          okText: 'Aceptar',
+          okText: TEXT.OK_BUTTON,
         });
       }
     }
 
     function socialShare() {
-      var randomShare = Math.round(Math.random() * 50);
+      var randomShare = Math.round(Math.random() * 40);
       if (randomShare == 7 && localStorage.getItem('shareMessage')) {
         $ionicPopup.show({
           title: TEXT.SHARE_PROMPT,
@@ -99,16 +100,8 @@
     }
 
     function shareEureka() {
-      var shareURL = ionic.Platform.isIOS() ? 'https://www.google.com/#q=eureka+ios' : 'https://www.google.com/#q=eureka+android';
-      $cordovaSocialSharing.share(TEXT.SHARE_MESSAGE, TEXT.SHARE_TITLE, "www/img/logo.png", shareURL);
-    }
-
-    function logOut() {
-      //TODO: SAVE PRONUNCIATION WEIGHTS ON DB PRIOR TO DELETING
-      localStorage.removeItem('userSession');
-      localStorage.removeItem('shareMessage');
-      $cordovaFacebook.logout('Goodbye!');
-      $state.go('home');
+      var shareURL = ionic.Platform.isIOS() ? 'https://www.google.com/#q=eureka+ios' : 'https://play.google.com/store/apps/details?id=com.fys.eureka';
+      $cordovaSocialSharing.share(TEXT.SHARE_MESSAGE, TEXT.SHARE_TITLE, "www/img/logoEureka.png", shareURL);
     }
 
     function myTexts() {

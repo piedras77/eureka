@@ -23,8 +23,8 @@
     _this.wordOptions = [];
     _this.inputType;
     var recognition = new SpeechRecognition();
-    _this.texts = TEXT;
     // var recognition = new webkitSpeechRecognition();
+    _this.texts = TEXT;
     recognition.onresult = speechResult;
     recognition.onerror = speakEnd;
     $scope.selectedOption = {};
@@ -38,6 +38,9 @@
     activate();
 
     function activate() {
+      document.addEventListener('backbutton', () => {
+        goToMain();
+      });
       recognition.lang = 'en-US';
       _this.micType = "microphone-idle.png";
       $ionicPopup.show({
