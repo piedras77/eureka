@@ -68,7 +68,13 @@
     }
 
     function pronunciationReady() {
-      var vocabLength =  CORE.VOCABULARY_EN[JSON.parse(localStorage.getItem('userSession')).level].length;
+      var level = JSON.parse(localStorage.getItem('userSession')).level;
+      if (level < 1)
+        level = 1;
+      else if ( level > 6 )
+        level = 6;
+
+      var vocabLength =  CORE.VOCABULARY_EN[level].length;
       var allValues = getGlobalWeights();
       if (!allValues || Object.keys(allValues).length < vocabLength) {
         return false;

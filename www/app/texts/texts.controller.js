@@ -7,21 +7,28 @@
 
   function TextsController($state,
                            $ionicPopup,
+                           $ionicLoading,
                            TEXT,
+                           apiService,
                            sessionService,
                            textService) {
 
     var _this = this;
     var savedTexts = [];
+    var newTexts = [];
+    var pageNumber = 1;
     _this.TEXT_CONSTANTS = TEXT;
     _this.user = sessionService.getCurrentUser();
     _this.texts = [];
-    _this.logOut = logOut;
+    _this.newPromps = [];
+    _this.logOut = apiService.logout;
     _this.deleteText = deleteText;
+    _this.downloadText = downloadText;
     _this.mainMenu = mainMenu;
     _this.showFullText = showFullText;
     _this.myProgress = myProgress;
     _this.aboutTheApp = aboutTheApp;
+    _this.getNewTexts = getNewTexts;
     activate();
 
     function activate() {
@@ -33,7 +40,7 @@
         }
       }
 
-      _this.texts = textService.getIntroWords(43, true);
+      _this.texts = textService.getIntroWords(43, textService.FROM_TEXTS, null);
     }
 
     function deleteText(textNumber) {
@@ -41,7 +48,7 @@
         .confirm({
           title: TEXT.DELETE_TEXT_CONFIRMATION_TITLE,
           template: TEXT.DELETE_TEXT_CONFIRMATION_MESSAGE,
-          okText: TEXT.CONFIRMATION_TEXT,
+          okText: TEXT.OK_BUTTON,
           okType: 'assertive',
           cancelText: 'No',
         })
@@ -50,8 +57,25 @@
         });
     }
 
-    function showFullText(textNumber) {
-      var fullTextInfo = cleanTextCodes(savedTexts[textNumber].text, savedTexts[textNumber].level);
+    function downloadText(textNumber) {
+      $ionicPopup
+        .confirm({
+          title: TEXT.DOWLOAD_TEXT_TITLE,
+          template: TEXT.DOWLOAD_TEXT_MESSAGE,
+          okText: TEXT.OK_BUTTON,
+          okType: 'positive',
+          cancelText: 'No',
+        })
+        .then(function (response) {
+            handleDownload(response, textNumber);
+        });
+    }
+
+    function showFullText(textNumber, fromDB) {
+      var fullTextInfo = cleanTextCodes(
+        fromDB ? newTexts[textNumber].text : savedTexts[textNumber].text,
+        fromDB ? newTexts[textNumber].level : savedTexts[textNumber].level
+      );
       $ionicPopup
         .alert({
           title: 'Level ' + fullTextInfo.level,
@@ -92,17 +116,34 @@
 
         allTexts[savedTexts[textNumber].level] = levelTexts;
         sessionService.setMyTexts(allTexts);
-        savedTexts.splice(textNumber, 1);  //.Level
+        savedTexts.splice(textNumber, 1);
         _this.texts.splice(textNumber, 1);
       }
     }
 
-    function logOut() {
-      //TODO: SAVE PRONUNCIATION WEIGHTS ON DB PRIOR TO DELETING
-      localStorage.removeItem('userSession');
-      localStorage.removeItem('shareMessage');
-      $cordovaFacebook.logout('Goodbye!');
-      $state.go('home');
+    function handleDownload(response, textNumber) {
+      if (response) {
+        var allTexts = JSON.parse(localStorage.getItem('myTexts'));
+        var levelTexts = allTexts[newTexts[textNumber].level];
+        levelTexts.push(newTexts[textNumber].text);
+        allTexts[newTexts[textNumber].level] = levelTexts;
+        sessionService.setMyTexts(allTexts);
+        newTexts.splice(textNumber, 1);
+        _this.newPromps.splice(textNumber, 1);
+        activate();
+      }
+    }
+
+    function getNewTexts() {
+      $ionicLoading.show();
+      apiService.getTexts(pageNumber++)
+        .then(function(result) {
+          $ionicLoading.hide();
+          newTexts = newTexts.concat(result);
+          _this.newPromps = textService.getIntroWords(43, textService.FROM_DATABASE, newTexts);
+        }, function(error) {
+            $ionicLoading.hide();
+        });
     }
 
     function myProgress() {

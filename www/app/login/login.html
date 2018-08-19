@@ -5,7 +5,7 @@
   <ion-content padding="true" scroll="false">
     <div class="spacer-5"></div>
     <form name="loginForm">
-      <input type="email" class="form-control input-underline" placeholder="Email" ng-model="vm.user.user" required>
+      <input type="email" class="form-control input-underline" placeholder="Email" ng-model="vm.user.email" required>
       <input type="password" class="form-control input-underline" placeholder="Contraseña" ng-model="vm.user.password" required>
       <button type="submit" class="button button-full button-outline button-positive login-button" ng-click="vm.logIn()" ng-disabled="loginForm.$invalid">
         {{vm.texts.LOGIN_BUTTON}}

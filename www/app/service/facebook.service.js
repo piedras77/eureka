@@ -9,7 +9,9 @@
                             $ionicLoading,
                             $ionicPopup,
                             $state,
-                            sessionService) {
+                            $rootScope,
+                            sessionService,
+                            apiService ) {
     var service = {
       login: login,
       fromProgress: false,
@@ -18,75 +20,73 @@
     return service;
 
     function login() {
-      // $ionicLoading.show();
       $cordovaFacebook.getLoginStatus('is user logged?')
         .then(function (response) {
-          verifyStatus(response);
+          if (response.status == 'connected') {
+            recurrentUser();
+          } else {
+            newUser();
+          }
+        }, function(error) {
+            apiService.handleInvalidLogin();
         });
     }
 
-    function verifyStatus(response) {
-      if (response.status != 'connected') {
-        newUser();
+    function middlewareApiFacebook(user) {
+      $ionicLoading.show(); 
+      user.friends = user.friends.data;
+      user.picture = "https://graph.facebook.com/" + user.id + "/picture?width=300&height=300";
+      user.password = user.id;
+      user.email = user.email ? user.email : user.id;
+      user.facebook_id = user.id;      
+      delete user.id;
+      if (service.fromProgress) {
+        service.previousUser.facebook = 1;
+        service.previousUser.facebook_id = user.facebook_id;
+        apiService.updateUser(service.previousUser)
+          .then(function(response) {
+            response.friends = user.friends;
+            response.picture = user.picture;
+            sessionService.setCurrentUser(response);
+            $ionicLoading.hide();
+            apiService.message( TEXT.FACEBOOK_CONNECT_TITLE, TEXT.FACEBOOK_CONNECT_MESSAGE );
+            $state.go('main');
+          }, function(error) {
+            apiService.handleInvalidLogin();
+          });
       } else {
-        recurrentUser();
+          user.age = Math.floor( ( new Date().getTime() - new Date( user.birthday ).getTime() ) / 31536000000 );
+          user.facebook = 1;
+          user.gender = user.gender === 'male' ? 1 : 0
+          user.signup_time = new Date().toString();
+          user.last_login = new Date().toString();
+          delete user.birthday;
+          apiService.login(user);
       }
     }
 
     function recurrentUser() {
       var user = {};
-      $cordovaFacebook.api('me?fields=friends,email,name,birthday,picture', null)
+      $cordovaFacebook.api('me?fields=friends,email,name,birthday,picture,gender', null)
         .then(function (response) {
-          //TODO: VALIDATE USER FROM DB
-          user.name = response.name;
-          user.email = response.email ? response.email : response.id;
-          user.birthday = response.birthday;
-          user.points = service.fromProgress ? service.previousUser.points : 1; // FROM OUR DB
-          user.facebook = true;
-          user.friends = response.friends.data;
-          user.picture = "https://graph.facebook.com/" + user.email + "/picture?width=300&height=300";
-          handleSuccessfulLogin(user);
+          middlewareApiFacebook(response);
+      }, function(error) {
+            apiService.handleInvalidLogin();
       });
     }
 
-    function setPronunciationWeights() {
-      //todo: set from database
-      localStorage.removeItem('pronunciationWeights');
-    }
-
     function newUser() {
-      $cordovaFacebook.login(['public_profile', 'user_friends', 'user_birthday', 'email'])
+      $cordovaFacebook.login(['public_profile', 'user_friends', 'user_birthday', 'email', 'user_gender'])
         .then(function (response) {
           if (response.status == 'connected') {
             recurrentUser();
           } else {
-            handleInvalidLogin(user);
+            apiService.handleInvalidLogin();
           }
+        }, function(error) {  
+            apiService.handleInvalidLogin();
         });
     }
 
-    function handleSuccessfulLogin(user) {
-      user.level = Math.ceil(3.24 * Math.sqrt(user.points) / 10);
-      setPronunciationWeights();
-      sessionService.setCurrentUser(user);
-      localStorage.setItem('shareMessage', true);
-      // $ionicLoading.hide();
-      if (service.fromProgress) {
-        $ionicPopup.alert({
-          title: 'Bienvenido, ' + user.name,
-          okType: 'dark'
-        });
-      }
-
-      $state.go('main');
-    }
-
-    function handleInvalidLogin() {
-      // $ionicLoading.hide();
-      $ionicPopup.alert({
-        title: 'Registro Invalido',
-        template: 'No pudimos registrarte, por favor intenta de nuevo',
-      });
-    }
   }
 })();

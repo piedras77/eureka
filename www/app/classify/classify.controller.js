@@ -29,6 +29,9 @@
     activate();
 
     function activate() {
+      document.addEventListener('backbutton', () => {
+        goToMain();
+      });
       var XMLText = new DOMParser().parseFromString(textService.getText(), "text/xml").childNodes[0];
       var sentences = XMLText.childNodes;
       var advancedText = XMLText.id == 6 ? true : false;

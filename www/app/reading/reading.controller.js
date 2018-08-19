@@ -8,6 +8,7 @@
   function ReadingController(TEXT,
                              textService,
                              pronunciationService,
+                             apiService,
                              sessionService,
                              $ionicPopup,
                              $ionicSlideBoxDelegate,
@@ -30,6 +31,9 @@
     activate();
 
     function activate() {
+      document.addEventListener('backbutton', () => {
+        goToMain();
+      });
       $scope.result = [[]];
       $scope.sentences = [[]];
       recognition.lang = 'en-US';
@@ -147,7 +151,8 @@
 
     function addPoints() {
       if (myAnswers.length == $scope.sentences.length) {
-        sessionService.updatePoints();
+        user.points += myAnswers.length;
+        apiService.updateUser(user);
       }
     }
 

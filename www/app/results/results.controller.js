@@ -11,6 +11,7 @@
                              TEXT,
                              sessionService,
                              pronunciationService,
+                             apiService,
                              textService) {
     var _this = this;
     var RESULTS = {WRONG: 0, INCONTEXTUAL: 1, INCORRECT_CATEGORY: 2, INCORRECT_SUBCATEGORY: 3, CORRECT: 4};
@@ -34,14 +35,15 @@
     activate();
 
     function activate() {
-      _this.newLevelMessage = sessionService.updatePoints();
+      _this.newLevelMessage = false;
       _this.user = sessionService.getCurrentUser();
       _this.resultType = textService.getExcerciseType();
+      var oldLevel = Math.ceil(3.24 * Math.sqrt(_this.user.points) / 10);      
+
       _this.explanations = CORE.EXPLANATIONS;
       _this.imageUrl = _this.user.level < 6 ? 'img/english-flag.png' : 'img/spain-flag.png';
       _this.language = _this.user.level < 6 ? CORE.LANGUAGE.SPANISH : CORE.LANGUAGE.ENGLISH;
       var resultLabels = [TEXT.CORRECT_ANSWERS_TEXT, TEXT.INCORRECT_ANSWERS_TEXT];
-      //todo update points DT
       switch (_this.resultType) {
         case 'fill-text':
           getFillTextResults();
@@ -54,6 +56,13 @@
           getClassifyResults();
           prepareGraph('results', 'bar', resultLabels, graphColors, 'Classify');
       }
+
+      if (oldLevel !=  Math.ceil(3.24 * Math.sqrt(_this.user.points) / 10) ) {
+        _this.newLevelMessage = true;
+      }
+
+      apiService.updateUser(_this.user);
+
     }
 
     function prepareGraph(canvasId, graphType, labels, colors, title) {
@@ -100,6 +109,7 @@
         }
       }
 
+      _this.user.points += (_this.correct.length - wrongAnswers);
       _this.data = [Object.keys($scope.myAnswers).length - wrongAnswers, wrongAnswers, 0];
     }
 
@@ -139,6 +149,7 @@
         localStorage.removeItem('pronunciationWeights');
       }
 
+      _this.user.points += ( _this.data[0] + Math.floor(_this.data[1] / 2) );
       return [perfect, intermediate, wrong];
     }
 
@@ -163,12 +174,13 @@
           }
 
           var errorObject = getErrorObject(_this.correct[sentence].answer, $scope.myAnswers[sentence]);
-          //TODO: add errorStyle() to view;
+          // TODO: ADD ERROR STYLES
           _this.wrongSentences.push(_this.correct[sentence].completeSentence);
           _this.errors.push(errorObject);
         }
       }
 
+      _this.user.points += correct;
       _this.data  = [correct, _this.correct.length - correct];
     }
 
@@ -191,9 +203,6 @@
       } else {
         _this.results[index] = RESULTS.INCORRECT_CATEGORY;
       }
-      // else {
-    //   _this.results[index] = RESULTS.WRONG;
-    // }
     }
 
     function prepareTime() {

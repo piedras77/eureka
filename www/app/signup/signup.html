@@ -44,6 +44,10 @@
       <button class="button button-full button-positive" ng-click="vm.signUp()" ng-disabled="vm.user.password1 != vm.user.password2 || singupForm.$invalid">
         Registrarse
       </button>
+      <label class="item item-input"></label>
+      <button type="submit" class="button button-full button-outline button-positive login-button" ng-click="vm.loginWithFacebook()">
+        <i class="icon ion-social-facebook"></i>
+      </button>
     </form>
   </ion-content>
 </ion-view>

@@ -1,14 +1,16 @@
   (function () {
     'use strict';
 
-    var TESTING_PATH = 'http://localhost:8080/rest/';
-    var BASE_PATH = 'https://baker-ws-dev.herokuapp.com/rest/';
+    var TESTING_PATH = 'http://192.168.1.16:5000/api/';
+    var BASE_PATH = 'http://eureka-venv.xepm4dkpia.us-east-2.elasticbeanstalk.com/api/';
 
     angular
     .module('app.core')
     .constant('CORE', {
       'API_URL': BASE_PATH,
+      'AUTH_TOKEN': '2023e9f7526706d68081105149538ddb897f4cf8e1bd6c23a0bcdaa8758f89a1',
       'LANGUAGE': {ENGLISH: 0, SPANISH: 1},
+      'MAX_LEVEL': 6,
       'INTERROGATIVES_CODES': {
         'who': 'XZ1','what': 'YZ','which': 'XZ2','where': 'XZ3','how': 'XZ5',
         'when': 'XZ4', 'how much': 'XZ5','how many': 'XZ7','why': 'XZ6'

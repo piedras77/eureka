@@ -12,6 +12,8 @@
                                $location,
                                $ionicScrollDelegate,
                                $cordovaSocialSharing,
+                               $window,
+                               apiService,
                                CORE,
                                TEXT,
                                sessionService,
@@ -32,17 +34,23 @@
     _this.getThreeMoreFriends = getThreeMoreFriends;
     _this.mainMenu = mainMenu;
     _this.myTexts = myTexts;
-    _this.logOut = logOut;
+    _this.logOut = apiService.logout;
     _this.aboutTheApp = aboutTheApp;
     _this.facebookLogin = facebookLogin;
     activate();
 
     function activate() {
-      //todo get friends from db
+      document.addEventListener('backbutton', () => {
+        $state.go('main');
+        console.log('main');
+
+      });
+
       _this.additionalFriends = 3;
       if (_this.user.facebook) {
         getFriendRanks();
       }
+
       var timeStudying = getStudyingTime()
       getLearnedWords();
       _this.timeSpent = timeStudying.time;
@@ -138,11 +146,18 @@
     }
 
     function getUserInfo(index) {
-      $ionicPopup.alert({
-        title: _this.user.friends[index].name ? _this.user.friends[index].name : TEXT.UNKNOWN_USER,
-        template: '100 points',
-        okType: 'dark',
-      });
+      apiService.getUserByFacebookId(_this.user.friends[index].id)
+        .then(function(user) {
+          var points = '';
+          if (user)
+            points = user.points;
+          
+          $ionicPopup.alert({
+            title: _this.user.friends[index].name ? _this.user.friends[index].name : TEXT.UNKNOWN_USER,
+            template: points + ' points',
+            okType: 'dark',
+          });
+        });
     }
 
     function changeImage() {
@@ -151,8 +166,8 @@
     }
 
     function shareEureka() {
-      var shareURL = ionic.Platform.isIOS() ? 'https://www.google.com/#q=eureka+ios' : 'https://www.google.com/#q=eureka+android';
-      $cordovaSocialSharing.share(TEXT.SHARE_MESSAGE, TEXT.SHARE_TITLE, "www/img/logo.png", shareURL);
+      var shareURL = ionic.Platform.isIOS() ? 'https://www.google.com/#q=eureka+ios' : 'https://play.google.com/store/apps/details?id=com.fys.eureka';
+      $cordovaSocialSharing.share(TEXT.SHARE_MESSAGE, TEXT.SHARE_TITLE, "www/img/logoEureka.png", shareURL);
     }
 
     function goToVocabList() {
@@ -178,14 +193,6 @@
       facebookService.previousUser = _this.user;
       facebookService.fromProgress = true;
       facebookService.login();
-    }
-
-    function logOut() {
-      //TODO: SAVE PRONUNCIATION WEIGHTS ON DB PRIOR TO DELETING
-      localStorage.removeItem('userSession');
-      localStorage.removeItem('shareMessage');
-      $cordovaFacebook.logout('Goodbye!');
-      $state.go('home');
     }
 
     function myTexts() {

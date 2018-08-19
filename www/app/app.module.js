@@ -11,7 +11,7 @@
       'app.fill-text',
       'app.pronunciation',
       'app.classify',
-      // 'app.reading',
+      'app.reading',
       'app.results',
       'app.progress',
       'app.texts',
